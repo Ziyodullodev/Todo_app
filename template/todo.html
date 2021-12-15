@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+
+<head>
+
+  <meta charset="utf-8">
+  <title>{{title}}</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+  <!--style-->
+  <style>
+  .card {
+
+   box-shadow: 0 4px 8px 0 rgba(0,0,0,0.5),
+               0 6px 20px 0 rgba(0,0,0,0.39);
+   background: DarkOrange;
+   margin-bottom : 5%;
+   border-radius: 25px;
+   padding : 2%;
+   overflow: auto;
+   resize: both;
+   text-overflow: ellipsis;
+  }
+  .card:hover{
+    background: lightblue;
+  }
+
+  .submit_form{
+
+    text-align: center;
+    padding: 3%;
+    background: palegreen;
+    border-radius: 25px;
+    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.4),
+                0 6px 20px 0 rgba(0,0,0,0.36);
+  }
+
+  hr{
+    font-size:30px;
+  }
+  .malumot{
+    background-origin: padding-box;
+    border-radius: 10px;
+    background-size: cover;
+    text-align: center;
+  
+  }
+  .malumot:hover{
+    border-radius: 4px;
+    color: #fff;
+    border-color: red;
+
+  }
+  </style>
+
+</head>
+
+<body  class="container-fluid">
+
+  {% if messages %}
+  {% for message in messages %}
+  <div class="alert alert-info">
+    <strong>{{message}}</strong>
+  </div>
+  {% endfor %}
+  {% endif %}
+
+  <center class="row">
+    <h1><i>Kundalik ishlar</i></h1>
+    <hr />
+
+    <div class="col-md-9"> </div>
+    <div class="col-md-15" >
+      <div  class="submit_form">
+      <form action="{% url 'todo' %}" method="POST">{% csrf_token %}
+        <center>
+          <input class="malumot" type="text" placeholder="mavzu..." name="nom"><br><br>
+          <input class="malumot" type="text" placeholder="batafsil..." name="batafsil"><br><br>
+          <input class="malumot" type="text" placeholder="Status..." name="status"><br><br>
+          <input class="malumot" type="text" placeholder="vaqt..." name="vaqt"><br><br>
+        <button type="submit" class="btn btn-default">jonatish</button> 
+      </center>
+      </form>
+    </div>
+  </div>
+</div>
+  </center>
+ 
+  <div class="row">
+    {% for i in nom %}
+    <div class="col-md-7">
+
+
+      <div class="card">
+       
+        <center><b><h2>{{i.nom}}</h2></b></center>
+        <hr/>
+        <h2>
+          {{i.vaqt}}
+        </h2>
+        <hr/>
+        <h2>
+        {{i.batafsil}}
+      </h2>
+        <br/>
+        <br/>
+        <form action="/todo/{{i.id}}" method="POST" style="padding-right: 4%; padding-bottom: 3%;">
+          {% csrf_token %}
+          <button class="btn btn-primary" style="float: right;"><span class="glyphicon glyphicon-trash"></span>&nbsp; remove</button>
+          
+   
+        </form>
+      </div>
+    </div>
+    {% endfor %}
+    
+</body>
+
+</html>
